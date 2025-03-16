@@ -1,0 +1,234 @@
+<html>
+    <head>
+        <title>timetable</title>
+        <style>
+        body{text-transform: uppercase;}
+            .form{position:sticky; top:20; background-color:white; padding: 10; z-index:7;}
+            th{background-color: red; width: 50px; position: sticky; top:0; z-index:5;}
+            td{min-width: 100px;  padding:0;}
+            td input{width: 100px; border:0.2px solid rgba(255,0,0,0); background-color:rgba(255,0,0,0); padding:4; text-transform: uppercase;}
+            table, th{border: 1px solid black; border-collapse:collapse; text-transform: uppercase;}
+            table table{border:none;}
+            table table td{border:none;}
+            tr:nth-child(even){border: solid black 1px;}
+            td:nth-child(1){position:sticky; left:0; text-align:center; z-index:1; border-right: solid black 1px;}
+            th:nth-child(2){position:sticky; left:0; text-align:center; z-index:6;}
+            #classMonday{position:sticky; left:0; z-index:3;}
+            #classTuesday{position:sticky; left:0; z-index:3;}
+            #classWednesday{position:sticky; left:0; z-index:3;}
+            #classThursday{position:sticky; left:0; z-index:3;}
+            #classFriday{position:sticky; left:0; z-index:3;}
+            table table td:nth-of-type(even) {background-color: #c9e7fc;}
+            table table td:nth-of-type(odd) {background-color: #449dd8;}
+            .class{ padding:3; padding-left:5;}
+            .table{overflow:auto; height: 100%;}
+            .div{overflow: auto; height:90vh; width:100vw;}
+            table table td{height: 30px;}
+            .breaks{border-bottom: 1px rgb(255, 255, 255) solid; border-right: 2px solid black; border-left: 2px solid black;}
+            #breaksFriday{border-bottom: 1px rgb(0, 0, 0) solid;}
+            .stray{border: solid 2px black; width: 20%; padding: 10; display: inline-block; min-width: 200px; position: relative; margin-bottom:20px; }
+            nav{padding: 10px; background-color: blue; font-size: 20px; color:white; text-align: center; font-style: bold; width: 40px; position: absolute; bottom: 2; right: 2;}
+            #container{min-width:350px; }
+        </style>
+    </head>
+    <body onload="changeFormat()">
+        <header className = "form">
+        <form>
+            <div class = "stray" id = "stray" style = "margin-right: 20px;">
+                <label>Teacher's Name: <input type="text" id = "staff" placeholder="Mr. Ridwan" capitalized/></label><br><br>
+                <label>Subject: <input type="text" id = "subjecty" placeholder="E.g. Biology"/></label><br><br>
+                <label>Class: 
+                    <select id = "studentClass">
+                        <option value="JSS1">JSS1</option>
+                        <option value="JSS2">JSS2</option>
+                        <option value="JSS3">JSS3</option>
+                        <option value="SSS1">SSS1</option>
+                        <option value="SSS2">SSS2</option>
+                        <option value="SSS3">SSS3</option>
+                    </select>
+                </label><br><br>
+                <label>Period: 
+                    <select id="period">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                    </select></label> <br><br>
+                    <div id = "stray1"></div>
+                    <div id = "stray2"></div>
+                <br><br>
+                <nav onclick = "CreateStaff()" class = "nav">ADD</nav>
+            </div>
+            <div class = "stray" id = "container"><br></div>
+            <br><br>
+            <div>
+            <label>Class setting: 
+                <select id = "classSetting" onChange="changeFormat()">
+                    <option value="Department">Department</option>
+                    <option value="Arms">Arms</option>
+                    <script>
+                        function CreateStaff() {
+                            //document.querySelector("div.stray").innerHTML = "blue";
+                            var staff = document.createElement("div");
+                            staff.innerHTML = "NAME: "+document.getElementById("staff").value;
+                            document.getElementById("container").appendChild(staff);
+                            document.getElementById("container").appendChild(document.createElement("br"));
+
+                            var subjecty = document.createElement("div");
+                            subjecty.innerHTML = "SUBJECT: "+document.getElementById("subjecty").value;
+                            document.getElementById("container").appendChild(subjecty);
+                            document.getElementById("container").appendChild(document.createElement("br"));
+
+                            var studentClass = document.createElement("div");
+                            var studentClass1 = document.getElementById("studentClass").value;
+                            studentClass.innerHTML = "CLASS: "+studentClass1; //value.slice(0,1) slice(-1); splict("-",1)
+                            document.getElementById("container").appendChild(studentClass);
+                            document.getElementById("container").appendChild(document.createElement("br"));
+                            
+                            var deptType = document.createElement("div");
+                            deptType.innerHTML = "DEPARTMENT/ARMS: "+document.getElementById("deptType").value;
+                            document.getElementById("container").appendChild(deptType);
+                            document.getElementById("container").appendChild(document.createElement("br"));
+                            document.getElementById("container").appendChild(document.createElement("br"));
+                            //console.log(document.getElementById("deptType").value.slice(0,1));
+
+                            var value1 = document.getElementById("staff").value;
+                            var subjectValue = document.getElementById("subjecty").value;
+
+                            var period = document.getElementById("period").value;
+                            for(var c = 1; c<=period; c++){
+                            
+                            function autoCreate(inputElement){
+                            var inputDay = Math.floor(Math.random()*5)+1;
+                            var inputPeriod = Math.floor(Math.random()*8)+1;
+                            var stateClass = document.getElementById("studentClass").value;
+                            var dept = document.getElementById("deptType").value.slice(0,1);
+                            var inputAddress = inputDay+stateClass+dept+inputPeriod;
+                            var inputElement = document.getElementById(inputAddress);
+                            var checked = inputDay+""+inputPeriod+value1;
+                            var classic = inputDay+stateClass+dept+subjectValue;
+                            
+
+                            //(document.getElementById("staff").value == checked.split("/", 1))?alert(true):alert(false);
+                           
+
+                            //inputElement.value = "confirm";
+                            //alert(inputElement.value);
+                            //inputElement.style = "background: yellow";
+
+                            if(dept == "" && stateClass == "SSS1" || dept == "" && stateClass == "SSS2" || dept == "" && stateClass == "SSS3") {
+                                if(document.getElementsByName(checked).length >= 1 || document.getElementsByClassName(classic).length >= 1 ||
+                                document.getElementById(inputDay+stateClass+"S"+inputPeriod).value != ""||
+                                document.getElementById(inputDay+stateClass+"A"+inputPeriod).value != ""||
+                                document.getElementById(inputDay+stateClass+"C"+inputPeriod).value != ""
+                            ){
+                                    autoCreate(inputElement);
+                                }else{
+                                    document.getElementById(inputDay+stateClass+"S"+inputPeriod).value = subjectValue;
+                                    document.getElementById(inputDay+stateClass+"S"+inputPeriod).name = checked;
+                                    document.getElementById(inputDay+stateClass+"S"+inputPeriod).className = classic;
+
+                                    document.getElementById(inputDay+stateClass+"A"+inputPeriod).value = subjectValue;
+                                    document.getElementById(inputDay+stateClass+"A"+inputPeriod).name = checked;
+                                    document.getElementById(inputDay+stateClass+"A"+inputPeriod).className = classic;
+
+                                    document.getElementById(inputDay+stateClass+"C"+inputPeriod).value = subjectValue;
+                                    document.getElementById(inputDay+stateClass+"C"+inputPeriod).name = checked;
+                                    document.getElementById(inputDay+stateClass+"C"+inputPeriod).className = classic;
+                                }
+                            }
+                            else{
+                            if(document.getElementsByName(checked).length >= 1 || document.getElementsByClassName(classic).length > 1 || inputElement.value != ""){                                
+                                autoCreate(inputElement);
+                            }else{
+                                    inputElement.value = subjectValue;
+                                    inputElement.name = checked;
+                                    inputElement.className = classic;
+                                return;
+                            }
+                            }
+                            }
+                            autoCreate();
+                        }
+
+                            document.getElementById("staff").value = "";
+                            document.getElementById("deptType").value = "";
+                            document.getElementById("studentClass").value = "JSS1";
+                            document.getElementById("subjecty").value = "";
+                            document.getElementById("period").value = "1";
+                            
+                        }
+                        var cat = setInterval(changeSet, 15);
+                    function changeSet () {
+                        if(document.getElementById("classSetting").value == "Department"){
+                            document.getElementById("classOptions").disabled = true;
+                            document.getElementById("classOptions").value = "";
+                            setTimeout(armTable.replaceChildren(), 10);
+                            setTimeout(stray2.replaceChildren(), 10);
+                        } else{
+                            document.getElementById("classOptions").disabled = false;
+                            setTimeout(departTable.replaceChildren(), 10);
+                            setTimeout(stray1.replaceChildren(), 10);
+                        }
+                    }
+                    var tat = setInterval(typeClass, 15)
+                    //var classAgain = document.getElementById("studentClass").value
+                    function typeClass () {
+                        var classAgain = document.getElementById("studentClass").value
+                        if(document.getElementById("classSetting").value == "Department"){
+
+                        if( classAgain == 'JSS3' || classAgain == 'JSS1' || classAgain == 'JSS2'){
+                            document.getElementById("deptType").selectedIndex = 0;
+                            document.getElementById("deptType").disabled = true;
+                        }
+                        else{
+                            document.getElementById("deptType").disabled = false;
+                        }
+                        }
+                    }
+                    </script>
+                </select>
+            </label >
+            <label id = "arms">Arms:
+                <select id = "classOptions" disabled="true" onChange="changeArms()">
+                    <option> </option>
+                    <script>
+                        classOptions = document.getElementById("classOptions");
+                        for(var arm = "66"; arm <= "90"; arm++){
+                            var classOption =  document.createElement("option");
+                             classOption.innerHTML = "A - " + String.fromCharCode(arm);
+                             classOption.value = arm;
+                             document.getElementById("classOptions").appendChild(classOption);
+                        }
+                    </script>
+                </select>
+            </label>
+        </div>
+        </form>
+    </header>
+        <div class = "div">
+        <table id="departTable" class="table">   
+            <script src = "depart.js" type="text/javaScript" defer></script>
+        </table>
+        
+        <table id="armTable" class="table">
+            <script src = "arms.js" type="text/javaScript" defer></script>
+        </table>
+        </div>
+    <script>
+
+        var armTable = document.getElementById("armTable");
+        var departTable = document.getElementById("departTable");
+     
+     function getDayOfWeek(dayNumber) {
+       const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+       return days[dayNumber - 1];
+     }
+
+// Example usage:
+//console.log(getDayOfWeek(1))
+ </script>
+    </body>
+</html>
