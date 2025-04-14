@@ -1,0 +1,214 @@
+<html>
+    <head>
+        <title>timetable</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=no" />
+        <style>
+        body{text-transform: uppercase; overflow: auto; font-family: system-ui; background-color: #212426; color:#f9d3b4;}
+            .form{top:20; background-color:white; border:0px solid green; padding: 10; z-index:7; margin:auto;}
+            th{background-color: #005994; width: 50px; position: sticky; top:0; z-index:5; font-weight: bold; height: 30px; font-size: 18px; font-family: arial; color:white}
+            td{min-width: 100px;  padding:0;}
+            td textarea{width: 130px; border:0.2px solid rgba(255,0,0,0); background-color:rgba(255,0,0,0); padding:4; text-transform: uppercase; resize: none; overflow: hidden; }
+            table, th{border-collapse:collapse; text-transform: uppercase;}
+            table{border: 2px solid #005994;}
+            th{border: none;}
+            table table{border:none;}
+            table table td{border:none; font-weight: bold;}
+            tr:nth-child(even){border: solid #005994 0px; border-width: 2px 0px 2px 0px;}
+            td:nth-child(1){position:sticky; left:0; text-align:center; z-index:1; border-right: solid black 0px; font-weight: bold; color: #f9d3b4;}
+            th:nth-child(2){position:sticky; left:0; text-align:center; z-index:6;}
+            #classMonday{position:sticky; left:0; z-index:3;}
+            #classTuesday{position:sticky; left:0; z-index:3;}
+            #classWednesday{position:sticky; left:0; z-index:3;}
+            #classThursday{position:sticky; left:0; z-index:3;}
+            #classFriday{position:sticky; left:0; z-index:3;}
+            table > tr:nth-of-type(1){border-top: 0px;}
+            table table td:nth-of-type(even) {background-color: #c9e7fc; color:black; padding-left: 5px;}
+            table table td:nth-of-type(odd) {background-color: #54b7f8; color:black; padding-left: 5px;}
+            table table td{border-top: 2px white solid; z-index:2; position: relative;}
+            table table td:nth-of-type(1) {border-top: 0px solid white;}
+            table textarea{font-weight: bold; outline:none; height: 38px; max-height: 38px; vertical-align: middle; float: center;}
+            .class{ padding-left:3px;}
+            .table{overflow:auto; min-height: 100px; height: auto; max-height: 100%; border-top: none; border-radius: 20px; box-shadow:  2px 2px 5px black; background-color: #343739; margin: auto; max-width: 1388px;}
+            .div{overflow: visible; height:90vh; width:98vw; padding-bottom: 20px; background-color: #212426;}
+            table table td{min-height: 40px; height: 40px; vertical-align: middle;}
+            .breaks{border-bottom: 1px black solid; border-right: 0px solid black; border-left: 0px solid black;}
+            #breaksFriday{border-bottom: 1px black solid;}
+            .stray{background-color:#1f2123; border: solid 1px black; width: 300px; padding: 20px; display: inline-block; min-width: 300px; position: relative;  margin:20px; margin-bottom:35px; 
+                height: 290px;  box-shadow: 5px 5px 7px black, -5px -5px 7px #222527; color: #f9d3b4;}
+            .nav{width: 60px; position: absolute; bottom: -30; left: 50%; transform: translate(-52%, 10%); border: 10px solid #141516; border-radius: 100%; background-color: #1c1d1f; cursor: pointer; 
+                user-select: none;}
+            .nav:hover{background-color: #005994;}
+            #container{min-width:300px; max-height: 350px; overflow: auto; margin-top:20px; background-color: #1f2123; border-radius: 20px;}
+            .reset{font-family:cursive; font-weight: bolder; padding: 1px; text-align: center; font-size: 16px; color:white; width: 25px; height: 27px;
+                    position: absolute; right: 4; top: 4; cursor: pointer; user-select: none;}
+            #stray{font-weight: bold; border-radius:20px 20px 30px 30px; border-top:2px black solid;}
+            #stray input{border: none; height:30px; background-color:#1c1d1f; border: black solid 1px; border-radius: 20px; padding: 15px 10px; font-size:16px; width:220px; outline: none; 
+                color:#f7e8dd; border-width: 0 0 1px 0; width:250px;}
+            #stray input::placeholder{color: #f7e8dd; outline: none;}
+            select{border-width: 0px 0px 1px 0px; border-color: white; background-color: #212426; color:#f7e8dd; font-weight:bold; font-size: 16px; outline:none;}
+            #stray input:focus{border: 1px solid #005994; border-width: 0 0 1px 0;}
+            #modal{display:none; position: fixed; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); top:0; left: 0; z-index: 100;}
+            .modal{position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); min-height: 100px; height: auto; width: auto; background-color: #212426; padding:30px; 
+                border: 2px solid #005994; border-radius: 10px; z-index: 200;}
+            .modal input{ border: 1px solid black; outline: none; border-radius: 15px; padding:10px; background-color: #1f2123; color:grey}
+            .modal input:hover{border-color: #005994;}
+            .modal input:focus{border-color: red;}
+            .update{padding: 5px; background-color: #212426; border:1px black solid; color:#f9d3b4; border-radius: 10px; margin:auto; width: 67px; font-weight: bold; cursor: pointer; text-align: center; 
+                font-family: monospace; font-size: 18px;}
+            .update:hover{border-color: #005994; }
+            .divCancle{width: 100%; height: 100%;}
+            .modalEdit{text-transform: initial; font-weight: bold; font-family: monospace; font-size: 16px;}
+            .opt{margin: 10px; font-weight: bold;}
+            .container{margin:auto; border: red solid 0px; display: flex; justify-content: space-evenly; width: 100%; flex-wrap: wrap;}
+            @media all and (min-width: 1380px){
+                .table{margin: auto;}
+                .opt{margin-bottom: 30px; margin-left: 20vw;}
+                *::-webkit-scrollbar{width: 5px; height: 4px;}
+                table::-webkit-scrollbar, #container::-webkit-scrollbar{display: none;}
+                table:hover::-webkit-scrollbar, #container:hover::-webkit-scrollbar{display: block;}
+                *::-webkit-scrollbar-track{background-color: #ccc;}
+                *::-webkit-scrollbar-thumb{background-color: rgb(0,0,0,0.5);}
+                *::-webkit-scrollbar-thumb:hover{background-color: red;}
+            }
+            .dayTd{max-height: 200px; max-width: 1px; white-space: nowrap; text-overflow: hidden; overflow: visible; z-index: -1; font-size:30px; transform: rotate(-75deg); color: #f9d3b4;}
+            #spanner{display: none; color:rgb(247, 138, 138); text-transform: initial; font-family: monospace; position: absolute; top: 70%; left: 7%; font-size: 16px; font-weight: bold;}
+            textarea:hover{background-color: #0098fd !important;}
+            .search{width: 350px; display: flex; align-items: center; justify-content: center; padding: 1.5rem 1.75rem; border-radius: 3rem; background: #1f2123;
+                        -webkit-box-shadow: 5px 5px 7px #1c1d1f, -5px -5px 7px #222527; box-shadow: 5px 5px 7px #1c1d1f, -5px -5px 7px #222527;
+            }
+            .search input{flex: 1; border: none; font-size: 18px; font-family: var(--font-raleway); font-weight: 500; padding-right: 10px; outline: none; color: #a1a1a1; background: #1f2123; margin-right:10px;}
+            .search img{ width: 35px; height: 35px; cursor: pointer;}
+            .filter{display: flex; align-items: center; justify-content: space-evenly; padding: 2px; height: auto; width: 900px; max-width: 100%; flex-wrap: wrap; margin: auto; min-width: 351px;}
+            .filta{display: inline-block; min-width:200px; margin-bottom: 40px;}
+            .searcher{display: inline-block; margin-bottom: 40px;}
+            
+        </style>
+    </head>
+    <body>
+        <header className = "form">
+        <form>
+            <div class="container">
+                <div class = "stray" id = "stray" style = "margin-right: 20px;">
+                    <label><input type="text" id = "staff" placeholder="Teacher's Name" capitalized/></label><br><br>
+                    <label> <input type="text" id = "subjecty" placeholder="Subject"/></label><br><br>
+                    <label id = "autoMate">Auto Class: 
+                        <select id = "autoClass" onchange="autoClass3()">
+                            <option></option>
+                            <option>JSS</option>
+                            <option>SSS</option>
+                        </select>
+                        <br><br>
+                    </label>
+                    <label>Class: 
+                        <select id = "studentClass" onchange="typeClass()">
+                            <option value="JSS1">JSS1</option>
+                            <option value="JSS2">JSS2</option>
+                            <option value="JSS3">JSS3</option>
+                            <option value="SSS1">SSS1</option>
+                            <option value="SSS2">SSS2</option>
+                            <option value="SSS3">SSS3</option>
+                        </select>
+                    </label><br><br>
+                    <label>Period: 
+                        <select id="period">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select></label> <br><br>
+                        <div id = "stray1"></div>
+                        <div id = "stray2"></div>
+                    <br><br>
+                    <img src = "cancel.png" class = "reset" onclick= "reset12()">
+                    <img src = "add.png" onclick = "CreateStaff()"  class = "nav"/>
+                </div>
+                <div class = "stray" id = "container"><br></div>
+            </div>
+            <br>
+            <div class = "filter">
+                <div class="searcher">
+                    <div class ="search">
+                    <input type = "search" onfocus = "changeText()" id = "search" placeholder = "Search for teacher's schedule" />
+                    <img src="search.svg" alt="search" onClick="search1()"/>
+                </div> 
+                </div>
+                <div class = "filta">
+                    <label>Filter Class: 
+                        <select id = "filterClass" onChange="filtaClass()">
+                            <option value="" selected>All</option>
+                            <option value="JSS1">JSS1</option>
+                            <option value="JSS2">JSS2</option>
+                            <option value="JSS3">JSS3</option>
+                            <option value="SSS1">SSS1</option>
+                            <option value="SSS2">SSS2</option>
+                            <option value="SSS3">SSS3</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+            <div class="opt">
+            <label>Class setting: 
+                <select id = "classSetting" onChange="changeFormat()">
+                    <option value="Department">Department</option>
+                    <option value="Arms">Arms</option>
+                    <script src = "engine.js" type="text/javaScript" defer></script>
+                </select>
+            </label>
+            <label id = "arms">Arms:
+                <select id = "classOptions" disabled="true" onChange="changeArms()">
+                    <option> </option>
+                    <script>
+                        classOptions = document.getElementById("classOptions");
+                        for(var arm = "66"; arm <= "90"; arm++){
+                            var classOption =  document.createElement("option");
+                             classOption.innerHTML = "A - " + String.fromCharCode(arm);
+                             classOption.value = arm;
+                             document.getElementById("classOptions").appendChild(classOption);
+                        }
+                    </script>
+                </select>
+            </label>
+        </div>
+        </form>
+    </header>
+        <div class = "div" id = "meme">
+        <table id="departTable" class="table">   
+            <script src = "depart.js" type="text/javaScript" defer></script>
+        </table>
+        
+        <table id="armTable" class="table">
+            <script src = "arms.js" type="text/javaScript" defer></script>
+        </table>
+        </div>
+        <div id = "modal">
+            <div class = "divCancle" onclick="cancel1()"></div>
+            <div class = "modal" id = "modal1">
+                <div class = "modalEdit">Editing: <br>
+                    <span id = "dayEdit"></span>, <span id = "periodEdit"></span><sup id = "pos"></sup> period of<br>
+                    <span id = "classEdit"></span><br><br>
+                </div>
+                <label><input type="text" id = "staffEdit" placeholder="Teacher's Name" capitalized/></label><br><br>
+                <label> <input type="text" id = "subjectEdit" placeholder="Subject"/></label><br><br>
+                <input type = "hidden" id = "hiddenField">
+                <label><input type="checkbox" id="checkClash" checked> Check Subject Clash</label><br><br>
+                <span id = "spanner"></span>
+                <br><br>
+                <div class = "update" onclick="update1()">UPDATE</div>
+                <img src="cancel.png" class = "reset" onclick= "cancel1()">
+            </div>
+        </div>
+    <script>
+        var armTable = document.getElementById("armTable");
+        var departTable = document.getElementById("departTable");
+     
+     function getDayOfWeek(dayNumber) {
+       const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+       return days[dayNumber - 1];
+     }
+
+// Example usage:
+//console.log(getDayOfWeek(1))
+ </script>
+    </body>
+</html>
