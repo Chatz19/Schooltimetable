@@ -1,8 +1,9 @@
+setTimeout(changeFormat, 1);
 function changeFormat () {
     if(document.getElementById("classSetting").value == "Department"){
-
+        document.getElementById("container").replaceChildren();
         //setTimeout(armTable.remove(), 10000);
-        setTimeout(correct, 100);
+        setTimeout(correct, 20);
 
     function correct(){
         
@@ -38,6 +39,7 @@ function changeFormat () {
         label_type2.appendChild(br1);
     var br1 = document.createElement("br");
         label_type2.appendChild(br1);
+        typeClass();
 
     var headt = document.createElement("tr");
         headt.id = "headt";
@@ -73,6 +75,7 @@ function changeFormat () {
         
         var dayTd = document.createElement("td");
         dayTd.innerHTML = getDayOfWeek(wDay);
+        dayTd.className = "dayTd";
         document.getElementById(getDayOfWeek(wDay)).appendChild(dayTd);
         
         //class table data
@@ -93,7 +96,7 @@ function changeFormat () {
 
         var jsTd = document.createElement("td");
             jsTd.innerHTML = "JSS " + js;
-            jsTd.className = "class";
+            jsTd.className = "class "+"JSS"+js;
             document.getElementById("classTable" + getDayOfWeek(wDay)).appendChild(jsTd);
             }
 
@@ -104,7 +107,8 @@ function changeFormat () {
 
         var ssTd = document.createElement("td");
             ssTd.innerHTML = "SSS " + ss + " SCI.";
-            ssTd.className = "class";
+            ssTd.className = "class "+"SSS"+ss;
+            ssTd.id = "SSS"+ss;
             document.getElementById("classTable" + getDayOfWeek(wDay)).appendChild(ssTd);
 
             var classTr = document.createElement("tr");
@@ -113,7 +117,8 @@ function changeFormat () {
 
         var ssTd = document.createElement("td");
             ssTd.innerHTML = "SSS " + ss + " ART.";
-            ssTd.className = "class";
+            ssTd.className = "class "+"SSS"+ss;
+            ssTd.id = "SSS"+ss;
             document.getElementById("classTable" + getDayOfWeek(wDay)).appendChild(ssTd);
 
             var classTr = document.createElement("tr");
@@ -122,7 +127,8 @@ function changeFormat () {
 
         var ssTd = document.createElement("td");
             ssTd.innerHTML = "SSS " + ss + " COMM";
-            ssTd.className = "class";
+            ssTd.className = "class "+"SSS"+ss;
+            ssTd.id = "SSS"+ss;
             document.getElementById("classTable" + getDayOfWeek(wDay)).appendChild(ssTd);
             }
             //period time section start
@@ -145,6 +151,8 @@ function changeFormat () {
             var periodTable = document.createElement("table");
             periodTable.id = "periodTable" + getDayOfWeek(wDay)+i;
             document.getElementById("periods" + getDayOfWeek(wDay)+i).appendChild(periodTable);
+            
+            var checkClash = document.getElementById("checkClash");
     
             for(js = 1; js<=3; js++){ 
                     var classTr = document.createElement("tr");
@@ -153,12 +161,43 @@ function changeFormat () {
     
                     var jsTd = document.createElement("td");
                     jsTd.id = "td"+wDay+"JSS"+js+res;
+                    jsTd.className = "JSS"+js;
                     document.getElementById("periodTable" + getDayOfWeek(wDay)+i).appendChild(jsTd);
-                    //input as table data
-                    var tdInput = document.createElement("input");
+                    //textarea as table data
+                    var tdInput = document.createElement("textarea");
                     tdInput.id = wDay+"JSS"+js+res;
-                    //tdInput.className = wDay+""+res;
-                    //tdInput.value = "0/0";
+                    tdInput.readOnly = true;
+                    tdInput.row = 2;
+                    tdInput.addEventListener("click", function()  {
+                        var modal = document.getElementById("modal");
+                        modal.style.display = "block";
+                        document.getElementById("hiddenField").value = this.id;
+                        checkClash.checked = true;
+                        
+                        var periodEdit = document.getElementById("periodEdit");
+                        var classEdit = document.getElementById("classEdit");
+                        var dayEdit = document.getElementById("dayEdit");
+                        document.getElementById("staffEdit").focus();
+                        var pos;
+                        if(res == 1){
+                            pos = "st";
+                        }else{
+                            if(res == 2){
+                                pos = "nd";
+                            }else{
+                                if(res == 3){
+                                    pos = "rd";
+                                }else{
+                                    pos = "th";
+                                }
+                            }
+                        }
+                        periodEdit.innerText = res;
+                        classEdit.innerText = "JSS"+" "+this.id.slice(1,-1).slice(-1);
+                        dayEdit.innerText = getDayOfWeek(this.id.slice(0,1));
+                        document.getElementById("pos").innerText = pos;
+
+                    }, false);
                     document.getElementById(jsTd.id).appendChild(tdInput);
             }
 
@@ -169,12 +208,43 @@ function changeFormat () {
 
                 var ssTd = document.createElement("td");
                 ssTd.id = "td"+wDay+"SSS"+ss+"S"+res;
+                ssTd.className = "SSS"+ss;
                 document.getElementById("periodTable" + getDayOfWeek(wDay)+i).appendChild(ssTd);
-                var tdInput = document.createElement("input");
-                //input as table data
+                var tdInput = document.createElement("textarea");
+                //textarea as table data
                 tdInput.id = wDay+"SSS"+ss+"S"+res;
-                //tdInput.className = wDay+""+res;
-                //tdInput.value = "0/0";
+                tdInput.readOnly = true;
+                tdInput.row = 2;
+                tdInput.addEventListener("click", function()  {
+                    var modal = document.getElementById("modal");
+                    modal.style.display = "block";
+                    document.getElementById("hiddenField").value = this.id;
+                    checkClash.checked = true;
+
+                    var periodEdit = document.getElementById("periodEdit");
+                        var classEdit = document.getElementById("classEdit");
+                        var dayEdit = document.getElementById("dayEdit");
+                        document.getElementById("staffEdit").focus();
+                        var pos;
+                        if(res == 1){
+                            pos = "st";
+                        }else{
+                            if(res == 2){
+                                pos = "nd";
+                            }else{
+                                if(res == 3){
+                                    pos = "rd";
+                                }else{
+                                    pos = "th";
+                                }
+                            }
+                        }
+                        periodEdit.innerText = res;
+                        classEdit.innerText = "SSS"+" "+this.id.slice(1,-1).slice(-2).slice(0,1)+ " Science";
+                        dayEdit.innerText = getDayOfWeek(this.id.slice(0,1));
+                        document.getElementById("pos").innerText = pos;
+
+                }, false);
                 document.getElementById(ssTd.id).appendChild(tdInput);
 
                 var classTr = document.createElement("tr");
@@ -183,12 +253,45 @@ function changeFormat () {
 
                 var ssTd = document.createElement("td");
                 ssTd.id = "td"+wDay+"SSS"+ss+"A"+res;
+                ssTd.className = "SSS"+ss;
+                tdInput.readOnly = true;
+                tdInput.row = 2;
                 document.getElementById("periodTable" + getDayOfWeek(wDay)+i).appendChild(ssTd);
-                //input as table data
-                var tdInput = document.createElement("input");
-                //tdInput.className = wDay+""+res;
+                //textarea as table data
+                var tdInput = document.createElement("textarea");
                 tdInput.id = wDay+"SSS"+ss+"A"+res;
-                //tdInput.value = "0/0";
+                tdInput.readOnly = true;
+                tdInput.row = 2;
+                tdInput.addEventListener("click", function()  {
+                    var modal = document.getElementById("modal");
+                    modal.style.display = "block";
+                    document.getElementById("hiddenField").value = this.id;
+                    checkClash.checked = true;
+
+                    var periodEdit = document.getElementById("periodEdit");
+                        var classEdit = document.getElementById("classEdit");
+                        var dayEdit = document.getElementById("dayEdit");
+                        document.getElementById("staffEdit").focus();
+                        var pos;
+                        if(res == 1){
+                            pos = "st";
+                        }else{
+                            if(res == 2){
+                                pos = "nd";
+                            }else{
+                                if(res == 3){
+                                    pos = "rd";
+                                }else{
+                                    pos = "th";
+                                }
+                            }
+                        }
+                        periodEdit.innerText = res;
+                        classEdit.innerText = "SSS"+" "+this.id.slice(1,-1).slice(-2).slice(0,1)+" Art";
+                        dayEdit.innerText = getDayOfWeek(this.id.slice(0,1));
+                        document.getElementById("pos").innerText = pos;
+                    
+                }, false);
                 document.getElementById(ssTd.id).appendChild(tdInput);
 
                 var classTr = document.createElement("tr");
@@ -197,14 +300,43 @@ function changeFormat () {
 
                 var ssTd = document.createElement("td");
                 ssTd.id = "td"+wDay+"SSS"+ss+"C"+res;
+                ssTd.className = "SSS"+ss;
                 document.getElementById("periodTable" + getDayOfWeek(wDay)+i).appendChild(ssTd);
-                //input as table data
-                var tdInput = document.createElement("input");
+                //textarea as table data
+                var tdInput = document.createElement("textarea");
                 tdInput.id = wDay+"SSS"+ss+"C"+res;
-                //tdInput.className = wDay+""+res;
-                //tdInput.value = "0/0";
-                //tdInput.addEventListener("click", alert(this.value));
-                //alert(document.activeElement.value);
+                tdInput.readOnly = true;
+                tdInput.row = 2;
+                tdInput.addEventListener("click", function()  {
+                    var modal = document.getElementById("modal");
+                    modal.style.display = "block";
+                    document.getElementById("hiddenField").value = this.id;
+                    checkClash.checked = true;
+
+                    var periodEdit = document.getElementById("periodEdit");
+                        var classEdit = document.getElementById("classEdit");
+                        var dayEdit = document.getElementById("dayEdit");
+                        document.getElementById("staffEdit").focus();
+                        var pos;
+                        if(res == 1){
+                            pos = "st";
+                        }else{
+                            if(res == 2){
+                                pos = "nd";
+                            }else{
+                                if(res == 3){
+                                    pos = "rd";
+                                }else{
+                                    pos = "th";
+                                }
+                            }
+                        }
+                        periodEdit.innerText = res;
+                        classEdit.innerText = "SSS"+" "+this.id.slice(1,-1).slice(-2).slice(0,1)+" Commercial";
+                        dayEdit.innerText = getDayOfWeek(this.id.slice(0,1));
+                        document.getElementById("pos").innerText = pos;
+
+                }, false);
                 document.getElementById(ssTd.id).appendChild(tdInput);
         }
 
