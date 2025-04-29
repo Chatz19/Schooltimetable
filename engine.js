@@ -364,13 +364,15 @@ setInterval(autoClass4, 10)
                                             const textNodes = document.getElementsByClassName(textName);
                                             for(let r = 0; r < textNodes.length; r++){
                                                 textNodes[r].style.backgroundColor = "rgb(250, 101, 37)";
-                                            }
+                                            } 
+                                        array_search.push(textNodes.length);
                                         }
                                         catch(err){
                                             //console.log("invalid element");
                                         }
                                     }
                                 }
+                              alert(array_search.toString().replaceAll("0","").replaceAll(",","").length+" Period(s)");
                             }else{
                                 document.getElementById("search").focus();
                                 document.getElementById("search").value = "";
