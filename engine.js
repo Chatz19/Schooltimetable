@@ -355,6 +355,7 @@ setInterval(autoClass4, 10)
                                 }
 
                         function search1() {
+                            var array_search = [];
                             var search = document.getElementById("search").value.replaceAll(" ","");
                             if(search != ""){
                                 for(var i=1; i<=8; i++){
@@ -365,12 +366,14 @@ setInterval(autoClass4, 10)
                                             for(let r = 0; r < textNodes.length; r++){
                                                 textNodes[r].style.backgroundColor = "rgb(250, 101, 37)";
                                             }
+                                          array_search.push(textNodes.length);
                                         }
                                         catch(err){
                                             //console.log("invalid element");
                                         }
                                     }
                                 }
+                              alert(array_search.toString().replaceAll("0","").replaceAll(",","").length+" Period(s)");
                             }else{
                                 document.getElementById("search").focus();
                                 document.getElementById("search").value = "";
