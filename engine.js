@@ -355,6 +355,7 @@ setInterval(autoClass4, 10)
                                 }
 
                         function search1() {
+                            var array_search = [];
                             var search = document.getElementById("search").value.replaceAll(" ","");
                             if(search != ""){
                                 for(var i=1; i<=8; i++){
